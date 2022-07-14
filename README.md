@@ -14,3 +14,7 @@ To view the App, go to http://localhost:3000
 This app is built with create-react-app and it is a dummy page with filter possibilitie on a data that was mocked with a third-party library(json-graphql-server).
 
 Note:If step two is not done, the app is not going to run
+
+## 5 Conclusion
+
+I was not able to complete the task and that's the filter function,all approaches i made were futile.,as i keep running into bugs, but i was successful enough to mock my datas with graphiql Api using json-graphql-server, i was also able to query the data to get all transaction that were displayed on the browser.
