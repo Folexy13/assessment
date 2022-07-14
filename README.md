@@ -12,3 +12,5 @@ To view the App, go to http://localhost:3000
 ## 4. About app
 
 This app is built with create-react-app and it is a dummy page with filter possibilitie on a data that was mocked with a third-party library(json-graphql-server).
+
+Note:If step two is not done, the app is not going to run

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useLazyQuery, gql } from "@apollo/client";
 import "./styles.scss";
@@ -25,6 +25,11 @@ export const Page = () => {
     GET_ALL_TRANSACTIONS,
     { variables: { page: 0 } }
   );
+  useEffect(() => {
+    filter({ variables: { page: 0 } });
+  }, [filter]);
+
+  if (data) console.log(data);
   //custom hook to filter element
   const { operations, models } = useFilter();
 
@@ -38,7 +43,7 @@ export const Page = () => {
           placeholder="Search ..."
           onChange={(e) => operations.updateFilter("status", e.target.value)}
         />
-        {console.log(models)}
+
         <button onClick={() => filter({ filter: models })}>Search</button>
       </div>
       <form action="" className="filter">
@@ -73,45 +78,26 @@ export const Page = () => {
         </button>
       </form>
       <h3>List Of Transactions in ABC Company & Co</h3>
-      <button
-        className="ukd"
-        onClick={() => filter({ variables: { page: 0 } })}
-      >
-        View all Transactions
-      </button>
       <div className="container">
-        {data?.allTransactions
-          .filter((val) => {
-            if (searchTerm === "") {
-              return val;
-            } else if (
-              val.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              val.issuer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              val.price.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              val.status.toLowerCase().includes(searchTerm.toLowerCase())
-            ) {
-              return val;
-            }
-          })
-          .map((val, key) => {
-            return (
-              <div className="card" key={key}>
-                <div className="card-img">
-                  <img src={val.image} alt="" />
+        {data?.allTransactions.map((val, key) => {
+          return (
+            <div className="card" key={key}>
+              <div className="card-img">
+                <img src={val.image} alt="" />
+              </div>
+              <div className="card-body">
+                <div className="flex">
+                  <div className="issuer">Price: {val.price}</div>
+                  <div className="status">Status: {val.status}</div>
                 </div>
-                <div className="card-body">
-                  <div className="flex">
-                    <div className="issuer">Price: {val.price}</div>
-                    <div className="status">Status: {val.status}</div>
-                  </div>
-                  <div className="flex">
-                    <div className="issuer">Issuer: {val.issuer}</div>
-                    <div className="date">Date: {val.date}</div>
-                  </div>
+                <div className="flex">
+                  <div className="issuer">Issuer: {val.issuer}</div>
+                  <div className="date">Date: {val.date}</div>
                 </div>
               </div>
-            );
-          })}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
